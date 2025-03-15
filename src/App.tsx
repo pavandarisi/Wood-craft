@@ -16,7 +16,6 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/design/:id" element={<DesignDetail />} />
           <Route path="/contact" element={<Contact />} />
-
         </Routes>
       </div>
     </Router>
