@@ -17,34 +17,34 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'sudo docker build -t $IMAGE_NAME .'
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                // Stop and remove the container if it already exists
+                // Stop and remove existing container if running
                 sh '''
-                if [ $(docker ps -aq -f name=$CONTAINER_NAME) ]; then
-                  sudo docker stop $CONTAINER_NAME || true
-                  sudo docker rm $CONTAINER_NAME || true
+                CONTAINER_ID=$(docker ps -aq -f name=$CONTAINER_NAME)
+                if [ -n "$CONTAINER_ID" ]; then
+                  echo "Stopping existing container..."
+                  docker stop $CONTAINER_NAME || true
+                  docker rm $CONTAINER_NAME || true
                 fi
                 '''
 
                 // Run the new container
-                sh '''
-                sudo docker run -d -p $HOST_PORT:$CONTAINER_PORT --name $CONTAINER_NAME $IMAGE_NAME
-                '''
+                sh 'docker run -d -p $HOST_PORT:$CONTAINER_PORT --name $CONTAINER_NAME $IMAGE_NAME'
             }
         }
     }
 
     post {
         failure {
-            echo "Pipeline failed. Check logs for details."
+            echo "❌ Pipeline failed. Check logs for more info."
         }
         success {
-            echo "Application deployed successfully at http://<your-server-ip>:$HOST_PORT"
+            echo "✅ Application deployed successfully at http://<your-server-ip>:$HOST_PORT"
         }
     }
 }
