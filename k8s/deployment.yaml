@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wood-craft-deployment
+  namespace: default
+  labels:
+    app: wood-craft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wood-craft
+  template:
+    metadata:
+      labels:
+        app: wood-craft
+    spec:
+      containers:
+      - name: wood-craft
+        image: saipavan16/wood-craft:latest
+        ports:
+        - containerPort: 5173
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5173
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5173
+          initialDelaySeconds: 5
+          periodSeconds: 5

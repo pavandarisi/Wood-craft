@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wood-craft-service
+spec:
+  selector:
+    app: wood-craft
+  ports:
+    - protocol: TCP
+      port: 80            # Service port exposed to Ingress
+      targetPort: 5173    # Actual container port (Vite dev server)
+
