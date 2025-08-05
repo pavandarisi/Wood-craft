@@ -34,8 +34,8 @@ jobs:
 
       - name: Commit & Push updated manifests
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "sai"
+          git config --global user.email "support@randomforest.in"
           git add k8s/deployment.yaml
           git commit -m "Update image tag to latest"
           git push
