@@ -32,10 +32,10 @@ jobs:
         run: |
           sed -i "s#saipavan16/wood-craft:.*#saipavan16/wood-craft:latest#g" k8s/deployment.yaml
 
-      - name: Commit & Push updated manifests
-        run: |
-          git config --global user.name "sai"
-          git config --global user.email "support@randomforest.in"
-          git add k8s/deployment.yaml
-          git commit -m "Update image tag to latest"
-          git push
+      # - name: Commit & Push updated manifests
+      #   run: |
+      #     git config --global user.name "sai"
+      #     git config --global user.email "support@randomforest.in"
+      #     git add k8s/deployment.yaml
+      #     git commit -m "Update image tag to latest"
+      #     git push
